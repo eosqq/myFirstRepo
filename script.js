@@ -1,15 +1,16 @@
-let rollback = 40; // с урока №2
+let allServicePrices;
+let rollback = 40;
+let fullPrice;
+let servicePercentPrice;
 
 let title = prompt("Как называется ваш проект?", " КаЛьКулятор Верстки");
-let screens = prompt("Какие типы экранов нужно разработать?", "Интерактивные");
+let screens = prompt("Какие типы экранов нужно разработать?", "Простые, Сложные, Интерактивные");
 let screenPrice = parseInt(prompt("Сколько будет стоить данная работа?", "12000 рублей"));
 let adaptive = confirm("Нужен ли адаптив на сайте?");
 let serviceName1 = prompt("Какой дополнительный тип услуги нужен?", "service1");
 let servicePrice1 = parseInt(prompt("Сколько это будет стоить?", "3000 рублей"));
 let serviceName2 = prompt("Какой дополнительный тип услуги нужен?", "service2");
 let servicePrice2 = parseInt(prompt("Сколько это будет стоить?", "2000 рублей"));
-let fullPrice = screenPrice + servicePrice1 + servicePrice2;
-let servicePercentPrice = fullPrice - (fullPrice * (rollback/100));
 
 const getRollbackMessage = function (price) {
     switch (true) {
@@ -38,20 +39,23 @@ const getTitle = function(str) {
 }
 
 const getServicePercentPrices = function() {
-    return (FullPrice - (FullPrice * rollback / 100));
+    return (fullPrice - (fullPrice * rollback / 100));
 }
 
 const showTypeOf = function(variable) {
     console.log(variable, typeof variable)
 }
 
-let allServicePrices = getAllServicePrices (servicePrice1, servicePrice2);
-let FullPrice = getFullPrice(screenPrice, allServicePrices);
-let ServicePercentPrices = getServicePercentPrices(fullPrice, rollback);
-let RollbackMessage = getRollbackMessage (fullPrice);
-showTypeOf (screenPrice);
-showTypeOf (adaptive);
+allServicePrices = getAllServicePrices ();
+fullPrice = getFullPrice();
+servicePercentPrice = getServicePercentPrices();
+rollbackMessage = getRollbackMessage(fullPrice);
+title = getTitle(title);
 
-console.log(screens.split());
-console.log(RollbackMessage);
-console.log(ServicePercentPrices);
+showTypeOf(title);
+showTypeOf(screenPrice);
+showTypeOf(adaptive);
+
+console.log(screens.split(", "));
+console.log(rollbackMessage);
+console.log(servicePercentPrice);
