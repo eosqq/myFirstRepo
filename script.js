@@ -11,23 +11,23 @@ let serviceName2;
 let servicePrice1;
 let servicePrice2;
 
+//Функция валидации
 const isNumber = function (num) {
-
+    return !isNaN(parseFloat(num)) && isFinite(num)
 }
 
-const getAsking = function () {
+//Функция, которая задает вопросы
+const asking = function () {
     title = prompt("Как называется ваш проект?", " КаЛьКулятор Верстки");
-    screens = prompt("Какие типы экранов нужно разработать?", "Интерактивные");
-    screenPrice = parseInt(prompt("Сколько будет стоить данная работа?", "12000 рублей"));
+    screens = prompt("Какие типы экранов нужно разработать?", "Сложные, Простые, Интерактивные");
+    do {
+        screenPrice = parseInt(prompt("Сколько будет стоить данная работа?", "12000 рублей"));
+    }
+    while (screenPrice === true);
     adaptive = confirm("Нужен ли адаптив на сайте?");
-    // serviceName1 = prompt("Какой дополнительный тип услуги нужен?", "service1");
-    // servicePrice1 = parseInt(prompt("Сколько это будет стоить?", "3000 рублей"));
-    // serviceName2 = prompt("Какой дополнительный тип услуги нужен?", "service2");
-    // servicePrice2 = parseInt(prompt("Сколько это будет стоить?", "2000 рублей"));
-    fullPrice = screenPrice + servicePrice1 + servicePrice2;
-    servicePercentPrice = fullPrice - (fullPrice * (rollback/100));
 }
 
+//Возвращает размер скидки
 const getRollbackMessage = function (price) {
     switch (true) {
     case price >= 30000:
@@ -41,6 +41,7 @@ const getRollbackMessage = function (price) {
     }
 }
 
+//Сумма дополнительных услуг
 const getAllServicePrices = function() {
     let sum = 0;
 
@@ -51,36 +52,53 @@ const getAllServicePrices = function() {
         }
         else if (i === 1) {
             serviceName2 = prompt("Какой дополнительный тип услуги нужен?", "service2")
+        }
+        do {
+            sum += prompt('Сколько это будет стоить данная услуга?')
         } 
-        sum += parseInt(prompt("Сколько это будет стоить?"))
+        
+
+        // if (i === 0 && isNumber(servicePrice1)) {
+        //     servicePrice1 = prompt('Сколько это будет стоить данная услуга?')
+        //     console.log(isNumber(servicePrice1))
+        // }
+        // else servicePrice1 = prompt('Сколько это будет стоить данная услуга?')
+
+        // if (i === 1 && isNumber(servicePrice2)) {
+        //     servicePrice1 = prompt('Сколько это будет стоить данная услуга?')
+        //     console.log(isNumber(servicePrice2))
+        // }
+        // else servicePrice1 = prompt('Сколько это будет стоить данная услуга?')
     }
-
-    return sum;
-    // return (servicePrice1 + servicePrice2);
+    return +sum
+    // console.log("sum, ", sum)
 }
 
+//Сумма основной работы + дополнительных услуг
 function getFullPrice () {
-    return (screenPrice + allServicePrices);
+    return (+screenPrice + allServicePrices);
 }
 
+//Регистр названия проекта
 const getTitle = function(str) {
     str = str.trim().toLowerCase();
     return (str[0].toUpperCase() + str.slice(1));
 }
 
+//Цена с учетом комиссии
 const getServicePercentPrices = function() {
     return (fullPrice - (fullPrice * rollback / 100));
 }
 
+//Определение типа переменной
 const showTypeOf = function(variable) {
     console.log(variable, typeof variable)
 }
 
-asking = getAsking();
+asking();
 allServicePrices = getAllServicePrices ();
-fullPrice = getFullPrice(screenPrice, allServicePrices);
-servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
-rollbackMessage = getRollbackMessage (fullPrice);
+fullPrice = getFullPrice();
+servicePercentPrice = getServicePercentPrices();
 title = getTitle(title);
 
 showTypeOf(title);
@@ -88,6 +106,6 @@ showTypeOf(screenPrice);
 showTypeOf(adaptive);
 
 console.log("allServicePrices", allServicePrices)
-console.log(screens.split());
-console.log(rollbackMessage);
+console.log(screens.split(", "));
+console.log(getRollbackMessage(fullPrice));
 console.log(servicePercentPrice);
