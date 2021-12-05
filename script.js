@@ -14,7 +14,7 @@ let servicePrice2;
 //Функция валидации
 const isNumber = function (num) {
     return !isNaN(parseFloat(num)) && isFinite(num)
-}
+}       
 
 //Функция, которая задает вопросы
 const asking = function () {
@@ -53,26 +53,17 @@ const getAllServicePrices = function() {
         else if (i === 1) {
             serviceName2 = prompt("Какой дополнительный тип услуги нужен?", "service2")
         }
-        do {
-            sum += prompt('Сколько это будет стоить данная услуга?')
-        } 
-        
 
-        // if (i === 0 && isNumber(servicePrice1)) {
-        //     servicePrice1 = prompt('Сколько это будет стоить данная услуга?')
-        //     console.log(isNumber(servicePrice1))
-        // }
-        // else servicePrice1 = prompt('Сколько это будет стоить данная услуга?')
-
-        // if (i === 1 && isNumber(servicePrice2)) {
-        //     servicePrice1 = prompt('Сколько это будет стоить данная услуга?')
-        //     console.log(isNumber(servicePrice2))
-        // }
-        // else servicePrice1 = prompt('Сколько это будет стоить данная услуга?')
+        sum += (() => {
+            let n;
+            do {
+                n = prompt('Сколько это будет стоить?');
+            } while (!isNumber(n));
+            return +n;
+        })();
     }
-    return +sum
-    // console.log("sum, ", sum)
-}
+    return sum
+    }
 
 //Сумма основной работы + дополнительных услуг
 function getFullPrice () {
