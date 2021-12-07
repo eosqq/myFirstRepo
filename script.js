@@ -23,7 +23,7 @@ const asking = function () {
     do {
         screenPrice = parseInt(prompt("Сколько будет стоить данная работа?", "12000 рублей"));
     }
-    while (screenPrice === true);
+    while (!isNumber(screenPrice));
     adaptive = confirm("Нужен ли адаптив на сайте?");
 }
 
@@ -57,7 +57,7 @@ const getAllServicePrices = function() {
         sum += (() => {
             let n;
             do {
-                n = prompt('Сколько это будет стоить?').trim();
+                n = prompt('Сколько это будет стоить?');
             } while (!isNumber(n));
             return +n;
         })();
