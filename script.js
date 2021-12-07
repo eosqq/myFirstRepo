@@ -57,7 +57,7 @@ const getAllServicePrices = function() {
         sum += (() => {
             let n;
             do {
-                n = prompt('Сколько это будет стоить?');
+                n = prompt('Сколько это будет стоить?').trim();
             } while (!isNumber(n));
             return +n;
         })();
