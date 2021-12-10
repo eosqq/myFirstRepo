@@ -1,6 +1,34 @@
 //Объявление элементов, полученных со страницы
-const titleDOM = document.getElementById('title')
-console.log(titleDOM)
+const titleDOM = document.getElementsByTagName('h1')
+console.log(titleDOM[0])
+
+const handlerBtn = document.getElementsByClassName('handler_btn')
+for (let handler of handlerBtn) {
+    console.log(handler)
+}
+const screenBtn = document.querySelector('.screen-btn')
+console.log(screenBtn)
+
+const percent = document.querySelectorAll('.other-items.percent')
+    console.log(percent)
+const number = document.querySelectorAll('.other-items.number')
+console.log(number)
+
+const inputTypeRange = document.querySelector('.main-controls__range input[type=range]')
+console.log(inputTypeRange)
+
+const span = document.querySelector('.main-controls__range span[class=range-value]')
+console.log(span)
+
+const totalInput = document.getElementsByClassName('total-input')
+for (let inputItem of totalInput) {
+    console.log(inputItem)
+}
+
+let screens = document.querySelectorAll('.screen')
+for (screen of screens) {
+    console.log(screen)
+}
 
 //Объект appData
 const appData = {
@@ -123,4 +151,4 @@ const appData = {
     },
 }  
 
-appData.start()
+// appData.start()
