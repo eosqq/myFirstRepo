@@ -21,7 +21,7 @@ const appData = {
             appData.title = prompt("Как называется ваш проект?", " КаЛьКулятор Верстки");
         } while (appData.isNumber(appData.title))
         
-        for (i = 0; i < 2; i++) {
+        for (let i = 0; i < 2; i++) {
             let name = ''
             let price = 0
 
@@ -37,7 +37,7 @@ const appData = {
             appData.screens.push({ id: i, name: name, price: price })
         }
 
-        for (i = 0; i < 2; i++) {
+        for (let i = 0; i < 2; i++) {
             let name = ''
             let price = 0
 
