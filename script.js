@@ -5,7 +5,8 @@ books[2].before(books[4])
 books[5].after(books[2])
 
 //2
-
+const imageUrl = "url('/image/you-dont-know-js.jpg')"
+document.body.style.background = imageUrl
 
 //3
 titleBook4 = books[4].querySelector('a')
