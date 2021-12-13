@@ -1,33 +1,29 @@
 //Объявление элементов, полученных со страницы
-const titleDOM = document.getElementsByTagName('h1')
-console.log(titleDOM[0])
+const titleDOM = document.getElementsByTagName('h1') [0]
 
-const handlerBtn = document.getElementsByClassName('handler_btn')
-for (let handler of handlerBtn) {
-    console.log(handler)
-}
+const handlerItems = document.getElementsByClassName('handler_btn')
+const handler_btn_start = handlerItems[0]
+const handler_btn_reset = handlerItems[1]
+
 const screenBtn = document.querySelector('.screen-btn')
-console.log(screenBtn)
 
-const percent = document.querySelectorAll('.other-items.percent')
-    console.log(percent)
-const number = document.querySelectorAll('.other-items.number')
-console.log(number)
+const percentItems = document.querySelectorAll('.other-items.percent')
+
+const numberItems = document.querySelectorAll('.other-items.number')
 
 const inputTypeRange = document.querySelector('.main-controls__range input[type=range]')
-console.log(inputTypeRange)
 
 const span = document.querySelector('.main-controls__range span[class=range-value]')
-console.log(span)
 
 const totalInput = document.getElementsByClassName('total-input')
-for (let inputItem of totalInput) {
-    console.log(inputItem)
-}
+const total = totalInput[0]
+const totalCount = totalInput[1]
+const totalCountOther = totalInput[2]
+const totalFullCount = totalInput[3]
+const totalCountRollback = totalInput[4]
 
 let screens = document.querySelectorAll('.screen')
 for (screen of screens) {
-    console.log(screen)
 }
 
 //Объект appData
