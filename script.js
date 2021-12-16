@@ -1,36 +1,31 @@
-//1
-const books = document.querySelectorAll('.book')
-books[0].before(books[1])
-books[2].before(books[4])
-books[5].after(books[2])
+const btn = document.querySelector('#btn')
+let square = document.querySelector('#square')
+const text = document.querySelector('input[type=text]')
+const e_btn = document.querySelector('#e_btn').style.display = 'none'
+const range = document.querySelector('input[type=range]')
+const circle = document.querySelector('#circle')
+let widthCircle = document.querySelector('#circle')
+let heightCircle = document.querySelector('#circle')
+let newColor;
+let sizeCircle;
 
-//2
-const imageUrl = "url('/image/you-dont-know-js.jpg')"
-document.body.style.background = imageUrl
+const getText = function(event) {
+    newColor = event.target.value
+}
+text.addEventListener('input', getText)
 
-//3
-titleBook4 = books[4].querySelector('a')
-titleBook4.textContent = 'Книга 3. this и Прототипы Объектов'
+const changeColor = function() {
+    square.style.backgroundColor = newColor
+}
+btn.addEventListener('click', changeColor)
 
-//4
-const adv = document.querySelector('.adv')
-adv.remove()
+const rangeValue = function (event) {
+    sizeCircle = event.target.value + '%'
+}
+range.addEventListener('input', rangeValue)
 
-//5
-listBook0 = books[0].querySelectorAll('li')
-listBook0[10].before(listBook0[2])
-listBook0[8].after(listBook0[7])
-listBook0[4].before(listBook0[6])
-listBook0[6].after(listBook0[8])
-
-listBook5 = books[5].querySelectorAll('li')
-listBook5[1].after(listBook5[9])
-listBook5[4].after(listBook5[2])
-listBook5[8].before(listBook5[5])
-
-//6
-newList = document.createElement('li')
-newList.textContent = 'Глава 8: За пределами ES6'
-
-listBook2 = books[2].querySelectorAll('li')
-listBook2[8].after(newList)
+const changeSize = function() {
+    widthCircle.style.width = sizeCircle
+    heightCircle.style.height = sizeCircle
+}
+range.addEventListener('input', changeSize)
