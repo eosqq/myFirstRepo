@@ -6,25 +6,23 @@ const handler_btn_start = handlerItems[0]
 const handler_btn_reset = handlerItems[1]
 
 const screenBtn = document.querySelector('.screen-btn')
-
 const percentItems = document.querySelectorAll('.other-items.percent')
-
 const numberItems = document.querySelectorAll('.other-items.number')
 
 const inputTypeRange = document.querySelector('.main-controls__range input[type=range]')
-
 const span = document.querySelector('.main-controls__range span[class=range-value]')
 
 const totalInput = document.getElementsByClassName('total-input')
+
 const total = totalInput[0]
 const totalCount = totalInput[1]
 const totalCountOther = totalInput[2]
 const totalFullCount = totalInput[3]
 const totalCountRollback = totalInput[4]
+const range = inputTypeRange
+const rollback = span
 
 let screens = document.querySelectorAll('.screen')
-for (screen of screens) {
-}
 
 //Объект appData
 const appData = {
@@ -32,98 +30,122 @@ const appData = {
     screens: [],
     screenPrice: 0,
     adaptive: true,
-    rollback: 40,
-    allServicePrices: 0,
+    rollback: 0,
+    servicePricesPercent: 0,
+    servicePricesNumber: 0,
     fullPrice: 0,
     servicePercentPrice: 0,
-    services: {},
+    servicesPercent: {},
+    servicesNumber: {},
+    fullPriceRollback: 0,
 
-    //Описание валидации поля ввода
-    isNumber: function (num) {
-        return !isNaN(parseFloat(num)) && isFinite(num)
+    init: function() {
+        appData.addTitle()
+        // appData.checkEmptySelect()
+        screenBtn.addEventListener('click', appData.addScreenBlock)
+        handler_btn_start.addEventListener('click', appData.start)
+        range.addEventListener('input', appData.range)
     },
 
-    //Описание функции основных вопросов
-    asking: function () {
-        do {
-            appData.title = prompt("Как называется ваш проект?", " КаЛьКулятор Верстки");
-        } while (appData.isNumber(appData.title))
+    range: function(event) {
+        rollback.textContent = event.target.value
+        appData.rollback = +rollback.textContent
+    },
+
+    // checkEmptySelect: function() {
+
+    //     screens.forEach(function(screen) {
+    //         select = screen.querySelector('select')
+    //         const input = screen.querySelector('input')
+    //         return sele
+    //         if (select.options[select.selectedIndex] !== 0) {
+    //             handler_btn_start.disabled = false
+    //         }
+    //     })
         
-        for (let i = 0; i < 2; i++) {
-            let name = ''
-            let price = 0
+    // },
 
-            do {
-                name = prompt("Какие типы экранов нужно разработать?");
-            } while (appData.isNumber(name))
+    addTitle: function() {
+        document.title = titleDOM.textContent
+    },
 
-            do {
-                price = prompt("Сколько будет стоить данная работа?", "12000");
-            }
-            while (!appData.isNumber(price));
+    start: function() {
+        appData.addScreens()
+        appData.addServices()
+        appData.addPrices()
+        appData.showResult()
+        appData.logger()
+    },
 
-            appData.screens.push({ id: i, name: name, price: price })
-        }
+    showResult: function() {
+        total.value = appData.screenPrice
+        totalCountOther.value = appData.servicePricesPercent + appData.servicePricesNumber
+        totalFullCount.value = appData.fullPrice
+        totalCountRollback.value = appData.fullPriceRollback
+        totalCount.value = appData.screens[0].count
 
-        for (let i = 0; i < 2; i++) {
-            let name = ''
-            let price = 0
+    },
 
-                do {
-                    name = prompt("Какой дополнительный тип услуги нужен?")
-                } while (appData.isNumber(name))
+    addScreens: function() {
+
+        screens.forEach(function(screen, index) {
+            const select = screen.querySelector('select')
+            const input = screen.querySelector('input')
+            const selectName = select.options[select.selectedIndex].textContent
+            const screensCount = input.value
+            appData.screens.push({
+                id: index,
+                name: selectName,
+                price: +select.value * +input.value,
+                count: screensCount
+            })
+        })
+    },
     
-                do {
-                    price = +prompt('Сколько это будет стоить?', "2000");
-                } while (!appData.isNumber(price));
+    addServices: function() {
+        percentItems.forEach(function(item) {
+            const check = item.querySelector('input[type=checkbox')
+            const labet = item.querySelector('label')
+            const input = item.querySelector('input[type=text')
 
-                appData.services[name] = price
+            if (check.checked) {
+                appData.servicesPercent[labet.textContent] = +input.value
             }
-        appData.adaptive = confirm("Нужен ли адаптив на сайте?");  
+            
+        })
+
+        numberItems.forEach(function(item) {
+            const check = item.querySelector('input[type=checkbox')
+            const labet = item.querySelector('label')
+            const input = item.querySelector('input[type=text')
+
+            if (check.checked) {
+                appData.servicesNumber[labet.textContent] = +input.value
+            }
+            
+        })
+    },
+
+    addScreenBlock: function() {
+        const cloneScreen = screens[0].cloneNode(true)
+
+        screens[screens.length - 1].after(cloneScreen)
     },
 
     addPrices: function() {
         for (let screen of appData.screens) {
             appData.screenPrice += +screen.price
         }
-        for (let key in appData.services) {
-            appData.allServicePrices += appData.services[key]
+        for (let key in appData.servicesNumber) {
+            appData.servicePricesNumber += appData.servicesNumber[key]
             }
-    },
 
-    //Описание функции размера скидки
-    getRollbackMessage: function () {
-        switch (true) {
-        case appData.fullPrice >= 30000:
-            return ("Даем скидку в 10%");
-        case appData.fullPrice < 30000 && appData.fullPrice >= 15000:
-            return ("Даем скидку в 5%");
-        case appData.fullPrice >= 0 && appData.fullPrice < 15000:
-            return ("Скидка не предусмотрена");
-        case appData.fullPrice < 0:
-            return ("Что то пошло не так")
-        }
-    },
+        for (let key in appData.servicesPercent) {
+            appData.servicePricesPercent += appData.screenPrice * appData.servicesPercent[key] / 100
+            }
 
-    //Описание функции суммы дополнительных услуг
-    getAllServicePrices: function() {
-        
-    },
-
-    //Описание функции суммы основной работы + дополнительных услуг
-    getFullPrice: function() {
-        appData.fullPrice = +appData.screenPrice + appData.allServicePrices;
-    },
-
-    //Описание функции регистра названия проекта
-    getTitle: function() {
-        appData.title = appData.title.trim().toLowerCase();
-        appData.title = appData.title[0].toUpperCase() + appData.title.slice(1);
-    },
-
-    //Описание функции цены с учетом комиссии
-    getServicePercentPrices: function() {
-        appData.servicePercentPrice = appData.fullPrice - (appData.fullPrice * appData.rollback / 100);
+        appData.fullPrice = +appData.screenPrice + appData.servicePricesNumber + appData.servicePricesPercent;
+        appData.fullPriceRollback = +appData.fullPrice - (+appData.fullPrice * appData.rollback / 100);
     },
 
     //Описание логов
@@ -131,20 +153,8 @@ const appData = {
         console.log(appData.fullPrice)
         console.log(appData.servicePercentPrice)
         console.log(appData.screens)
-        // for (let key in appData) {
-        //     console.log('Свойство/Метод: ' + key + ', Значение: ' + appData[key])
-        // }
-    },
-
-    //Вызовы функций
-    start: function() {
-        appData.asking(),
-        appData.addPrices(),
-        appData.getFullPrice(),
-        appData.getServicePercentPrices(),
-        appData.getTitle(),
-        appData.logger()
-    },
+        console.log(appData)
+    }
 }  
 
-// appData.start()
+appData.init()
