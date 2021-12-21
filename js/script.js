@@ -28,22 +28,22 @@ let screens = document.querySelectorAll('.screen')
 const appData = {
     title: '',
     screens: [],
+    testmass: [],
     screenPrice: 0,
     adaptive: true,
     rollback: 0,
     servicePricesPercent: 0,
     servicePricesNumber: 0,
     fullPrice: 0,
-    servicePercentPrice: 0,
     servicesPercent: {},
     servicesNumber: {},
     fullPriceRollback: 0,
+    isError: false,
 
     init: function() {
         appData.addTitle()
-        // appData.checkEmptySelect()
         screenBtn.addEventListener('click', appData.addScreenBlock)
-        handler_btn_start.addEventListener('click', appData.start)
+        handler_btn_start.addEventListener('click', appData.addCheck)
         range.addEventListener('input', appData.range)
     },
 
@@ -52,29 +52,41 @@ const appData = {
         appData.rollback = +rollback.textContent
     },
 
-    // checkEmptySelect: function() {
+    addCheck: function() {
+        appData.isError = false
+        screens = document.querySelectorAll('.screen')
 
-    //     screens.forEach(function(screen) {
-    //         select = screen.querySelector('select')
-    //         const input = screen.querySelector('input')
-    //         return sele
-    //         if (select.options[select.selectedIndex] !== 0) {
-    //             handler_btn_start.disabled = false
-    //         }
-    //     })
-        
-    // },
+        screens.forEach(function(screen) {
+            const select = screen.querySelector('select')
+            const input = screen.querySelector('input[type=text]')
+
+            if (input.value === "" || select.value === "") {
+                appData.isError = true
+            } else {
+                appData.isError = false
+            }
+        })
+        if (!appData.isError) {
+            appData.start()
+        } else {
+            alert ('Заполните пустые поля')
+        }
+    },
 
     addTitle: function() {
         document.title = titleDOM.textContent
     },
 
+    afterStart: function() {
+        
+    },
+
     start: function() {
-        appData.addScreens()
-        appData.addServices()
-        appData.addPrices()
-        appData.showResult()
-        appData.logger()
+            appData.addScreens()
+            appData.addServices()
+            appData.addPrices()
+            appData.showResult()
+            appData.logger()
     },
 
     showResult: function() {
@@ -82,17 +94,16 @@ const appData = {
         totalCountOther.value = appData.servicePricesPercent + appData.servicePricesNumber
         totalFullCount.value = appData.fullPrice
         totalCountRollback.value = appData.fullPriceRollback
-        totalCount.value = appData.screens[0].count
-
+        totalCount.value = appData.screens.reduce((sum, item) => sum + item.count, 0)
     },
 
     addScreens: function() {
-
+        
         screens.forEach(function(screen, index) {
             const select = screen.querySelector('select')
             const input = screen.querySelector('input')
             const selectName = select.options[select.selectedIndex].textContent
-            const screensCount = input.value
+            screensCount = +input.value
             appData.screens.push({
                 id: index,
                 name: selectName,
@@ -122,14 +133,13 @@ const appData = {
             if (check.checked) {
                 appData.servicesNumber[labet.textContent] = +input.value
             }
-            
         })
     },
 
     addScreenBlock: function() {
         const cloneScreen = screens[0].cloneNode(true)
-
         screens[screens.length - 1].after(cloneScreen)
+        screens = document.querySelectorAll('.screen')
     },
 
     addPrices: function() {
@@ -151,7 +161,6 @@ const appData = {
     //Описание логов
     logger: function() {
         console.log(appData.fullPrice)
-        console.log(appData.servicePercentPrice)
         console.log(appData.screens)
         console.log(appData)
     }
