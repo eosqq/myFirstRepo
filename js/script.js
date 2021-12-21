@@ -78,10 +78,6 @@ const appData = {
         document.title = titleDOM.textContent
     },
 
-    afterStart: function() {
-        
-    },
-
     start: function() {
             appData.addScreens()
             appData.addServices()
@@ -122,7 +118,6 @@ const appData = {
             if (check.checked) {
                 appData.servicesPercent[labet.textContent] = +input.value
             }
-            
         })
 
         numberItems.forEach(function(item) {
