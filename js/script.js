@@ -48,8 +48,9 @@ const appData = {
     },
 
     range: function(event) {
-        rollback.textContent = event.target.value
-        appData.rollback = +rollback.textContent
+        rollback.textContent = +event.target.value
+        appData.rollback = rollback.textContent
+        span.textContent = rollback.textContent + '%'
     },
 
     addCheck: function() {
@@ -103,21 +104,20 @@ const appData = {
             const select = screen.querySelector('select')
             const input = screen.querySelector('input')
             const selectName = select.options[select.selectedIndex].textContent
-            screensCount = +input.value
             appData.screens.push({
                 id: index,
                 name: selectName,
                 price: +select.value * +input.value,
-                count: screensCount
+                count: +input.value
             })
         })
     },
     
     addServices: function() {
         percentItems.forEach(function(item) {
-            const check = item.querySelector('input[type=checkbox')
+            const check = item.querySelector('input[type=checkbox]')
             const labet = item.querySelector('label')
-            const input = item.querySelector('input[type=text')
+            const input = item.querySelector('input[type=text]')
 
             if (check.checked) {
                 appData.servicesPercent[labet.textContent] = +input.value
@@ -126,9 +126,9 @@ const appData = {
         })
 
         numberItems.forEach(function(item) {
-            const check = item.querySelector('input[type=checkbox')
+            const check = item.querySelector('input[type=checkbox]')
             const labet = item.querySelector('label')
-            const input = item.querySelector('input[type=text')
+            const input = item.querySelector('input[type=text]')
 
             if (check.checked) {
                 appData.servicesNumber[labet.textContent] = +input.value
@@ -155,7 +155,7 @@ const appData = {
             }
 
         appData.fullPrice = +appData.screenPrice + appData.servicePricesNumber + appData.servicePricesPercent;
-        appData.fullPriceRollback = +appData.fullPrice - (+appData.fullPrice * appData.rollback / 100);
+        appData.fullPriceRollback = +appData.fullPrice - (+appData.fullPrice * +appData.rollback / 100);
     },
 
     //Описание логов
