@@ -41,10 +41,10 @@ const appData = {
     isError: false,
 
     init: function() {
-        appData.addTitle()
-        screenBtn.addEventListener('click', appData.addScreenBlock)
-        handler_btn_start.addEventListener('click', appData.addCheck)
-        range.addEventListener('input', appData.range)
+        this.addTitle()
+        screenBtn.addEventListener('click', this.addScreenBlock)
+        handler_btn_start.addEventListener('click', this.addCheck)
+        range.addEventListener('input', this.range)
     },
 
     range: function(event) {
@@ -57,21 +57,23 @@ const appData = {
         appData.isError = false
         screens = document.querySelectorAll('.screen')
 
-        screens.forEach(function(screen) {
+        screens.forEach((screen) => {
             const select = screen.querySelector('select')
             const input = screen.querySelector('input[type=text]')
 
             if (input.value === "" || select.value === "") {
+                console.log(this)
                 appData.isError = true
             } else {
                 appData.isError = false
             }
         })
         if (!appData.isError) {
-            appData.start()
+            appData.start() // !!!
         } else {
             alert ('Заполните пустые поля')
         }
+        console.log(this);
     },
 
     addTitle: function() {
@@ -79,19 +81,19 @@ const appData = {
     },
 
     start: function() {
-            appData.addScreens()
-            appData.addServices()
-            appData.addPrices()
-            appData.showResult()
-            appData.logger()
+            this.addScreens()
+            this.addServices()
+            this.addPrices()
+            this.showResult()
+            this.logger()
     },
 
     showResult: function() {
-        total.value = appData.screenPrice
-        totalCountOther.value = appData.servicePricesPercent + appData.servicePricesNumber
-        totalFullCount.value = appData.fullPrice
-        totalCountRollback.value = appData.fullPriceRollback
-        totalCount.value = appData.screens.reduce((sum, item) => sum + item.count, 0)
+        total.value = this.screenPrice
+        totalCountOther.value = this.servicePricesPercent + this.servicePricesNumber
+        totalFullCount.value = this.fullPrice
+        totalCountRollback.value = this.fullPriceRollback
+        totalCount.value = this.screens.reduce((sum, item) => sum + item.count, 0)
     },
 
     addScreens: function() {
@@ -135,6 +137,7 @@ const appData = {
         const cloneScreen = screens[0].cloneNode(true)
         screens[screens.length - 1].after(cloneScreen)
         screens = document.querySelectorAll('.screen')
+        console.log(this);
     },
 
     addPrices: function() {
