@@ -73,7 +73,7 @@ const appData = {
         } else {
             alert ('Заполните пустые поля')
         }
-        console.log(this);
+        console.dir(this);
     },
 
     addTitle: function() {
@@ -85,7 +85,61 @@ const appData = {
             this.addServices()
             this.addPrices()
             this.showResult()
+            this.reset()
             this.logger()
+    },
+
+    reset: function() {
+        handler_btn_start.style.display = 'none'
+        handler_btn_reset.style.display = 'block'
+        handler_btn_reset.textContent = 'Сброс'
+        handler_btn_reset.addEventListener('click', appData.addClear)
+    },
+
+    addClear: function() {
+
+        screens.forEach(function(screen) {
+            const select = screen.querySelector('select')
+            const input = screen.querySelector('input')
+            select.options.selectedIndex = 0
+            select.disabled = false
+            input.value = ''
+            input.disabled = false
+        })
+        appData.screens.splice(0, appData.screens.length)
+
+        percentItems.forEach(function(item) {
+            const check = item.querySelector('input[type=checkbox]')
+            check.checked = false
+            check.disabled = false
+        })
+        delete appData.servicesPercent
+
+        numberItems.forEach(function(item) {
+            const check = item.querySelector('input[type=checkbox]')
+            check.checked = false
+            check.disabled = false
+        })
+        delete appData.servicesNumber
+
+        range.value = '0'
+        span.textContent = 0
+        rollback.textContent = +span.textContent + '%'
+
+        //appData.screenPrice = 0
+        //appData.servicePricesPercent = 0
+        //appData.servicePricesNumber = 0
+        //appData.fullPrice = 0
+        //appData.fullPriceRollback = 0
+        //total.value = 0
+        //totalCountOther.value = 0
+        //totalFullCount.value = 0
+        //totalCountRollback.value = 0
+        //totalCount.value = 0
+
+        handler_btn_start.style.display = 'block'
+        handler_btn_reset.style.display = 'none'
+        appData.init()
     },
 
     showResult: function() {
@@ -108,6 +162,9 @@ const appData = {
                 price: +select.value * +input.value,
                 count: +input.value
             })
+            console.log(appData.screens);
+            select.disabled = true
+            input.disabled = true
         })
     },
     
@@ -120,6 +177,8 @@ const appData = {
             if (check.checked) {
                 appData.servicesPercent[labet.textContent] = +input.value
             }
+            check.disabled = true
+            console.log(appData.servicesPercent); 
         })
 
         numberItems.forEach(function(item) {
@@ -130,6 +189,7 @@ const appData = {
             if (check.checked) {
                 appData.servicesNumber[labet.textContent] = +input.value
             }
+            check.disabled = true
         })
     },
 
