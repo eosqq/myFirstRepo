@@ -61,10 +61,10 @@ const appData = {
             const select = screen.querySelector('select')
             const input = screen.querySelector('input[type=text]')
 
-            if (input.value === "" || select.value === "") {
-                this.isError = false
-            } else {
+            if (input.value === "" || select.textContent === "") {
                 this.isError = true
+            } else {
+                this.isError = false
             }
         })
         return this.isError
