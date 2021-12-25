@@ -88,10 +88,10 @@ const appData = {
     },
 
     changeBtn: function () {
-        if (handler_btn_reset.style.display = 'none') {
+        if (handler_btn_reset.style.display === 'none') {
             handler_btn_start.style.display = 'none'
             handler_btn_reset.style.display = 'block'
-        } else if (handler_btn_start.style.display = 'none') {
+        } else if (handler_btn_start.style.display === 'none') {
             handler_btn_start.style.display = 'block'
             handler_btn_reset.style.display = 'none'
         }
@@ -218,7 +218,7 @@ const appData = {
             }
 
             this.fullPrice = +this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
-            this.fullPriceRollback = +this.fullPrice - (+this.fullPrice * +this.rollback / 100);
+            this.fullPriceRollback = +this.fullPrice - (+this.fullPrice * +this.rollbacks / 100);
     },
 
     //Описание логов
