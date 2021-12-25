@@ -41,8 +41,8 @@ const appData = {
     init: function() {
         this.addTitle()
         screenBtn.addEventListener('click', this.addScreenBlock.bind(this))
-        handler_btn_start.addEventListener('click', () => this.start())
         this.addCheck.bind(this)
+        handler_btn_start.addEventListener('click', () => this.start())
         range.addEventListener('input', () => this.getRange())
         handler_btn_reset.addEventListener('click', () => this.reset())
     },
@@ -54,7 +54,7 @@ const appData = {
     },
 
     addCheck: function() {
-        !this.isError
+        this.isError = false
         screens = document.querySelectorAll('.screen')
 
         screens.forEach((screen) => {
@@ -62,12 +62,12 @@ const appData = {
             const input = screen.querySelector('input[type=text]')
 
             if (input.value === "" || select.value === "") {
-                this.isError
+                this.isError = false
             } else {
-                !this.isError
+                this.isError = true
             }
         })
-        return !this.isError
+        return this.isError
     },
 
     addTitle: function() {
