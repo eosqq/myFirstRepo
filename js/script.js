@@ -42,14 +42,14 @@ const appData = {
 
     init: function() {
         this.addTitle()
-        screenBtn.addEventListener('click', this.addScreenBlock)
-        handler_btn_start.addEventListener('click', this.addCheck)
-        range.addEventListener('input', this.range)
+        screenBtn.addEventListener('click', this.addScreenBlock.bind(this))
+        handler_btn_start.addEventListener('click', this.addCheck.bind(this))
+        range.addEventListener('input', this.range.bind(this))
     },
 
     range: function(event) {
         rollback.textContent = +event.target.value
-        appData.rollback = rollback.textContent
+        this.rollback = rollback.textContent
         span.textContent = rollback.textContent + '%'
     },
 
