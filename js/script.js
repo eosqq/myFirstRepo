@@ -122,14 +122,19 @@ const appData = {
             check.checked = false
             check.disabled = false
         })
+        for(let key in this.servicesPercent) {
+            delete this.servicesPercent[key]
+        }
 
         numberItems.forEach((item) => {
             const check = item.querySelector('input[type=checkbox]')
             check.checked = false
             check.disabled = false
         })
-
-        cloneScreen.remove()
+        for(let key in this.servicesNumber) {
+            delete this.servicesNumber[key]
+        }
+        
         screens = document.querySelectorAll('.screen')
 
         range.value = '0'
@@ -141,10 +146,14 @@ const appData = {
         this.fullPrice = 0
         this.fullPriceRollback = 0
         total.value = 0
+        this.rollbacks = 0
         totalCountOther.value = 0
         totalFullCount.value = 0
         totalCountRollback.value = 0
         totalCount.value = 0
+        if (cloneScreen !== '') {
+            cloneScreen.remove()
+        }
     },
 
     showResult: function() {
