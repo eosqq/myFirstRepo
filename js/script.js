@@ -11,7 +11,6 @@ const numberItems = document.querySelectorAll('.other-items.number')
 
 const range = document.querySelector('.main-controls__range input[type=range]')
 const rollback = document.querySelector('.main-controls__range span[class=range-value]')
-console.log(range.value);
 
 const totalInput = document.getElementsByClassName('total-input')
 
@@ -49,7 +48,6 @@ const appData = {
     },
 
     getRange: function() {
-        console.log(this);
         this.rollbacks = +range.value
         rollback.textContent = +range.value + '%'
     },
@@ -61,7 +59,6 @@ const appData = {
         screens.forEach((screen) => {
             const select = screen.querySelector('select')
             const input = screen.querySelector('input[type=text]')
-            console.log(input.value); 
 
             if (input.value === "" || select.textContent === "") {
                 this.isError = true
@@ -103,8 +100,6 @@ const appData = {
     reset: function() {
         this.changeBtn()
         
-        console.log(this);
-
         screens.forEach((screen) => {
             const select = screen.querySelector('select')
             const input = screen.querySelector('input')
@@ -112,7 +107,6 @@ const appData = {
             select.disabled = false
             input.value = ''
             input.disabled = false
-            console.log(select);
         })
         
         this.screens.splice(0, this.screens.length)
@@ -173,13 +167,12 @@ const appData = {
             const select = screen.querySelector('select')
             const input = screen.querySelector('input')
             const selectName = select.options[select.selectedIndex].textContent
-            appData.screens.push({
+            this.screens.push({
                 id: index,
                 name: selectName,
                 price: +select.value * +input.value,
                 count: +input.value
             })
-            console.log(appData.screens);
             select.disabled = true
             input.disabled = true
         })
@@ -195,7 +188,6 @@ const appData = {
                 this.servicesPercent[labet.textContent] = +input.value
             }
             check.disabled = true
-            console.log(this.servicesPercent); 
         })
 
         numberItems.forEach((item) => {
@@ -217,8 +209,6 @@ const appData = {
         cloneScreen.classList.add('cloned')
         screens[screens.length - 1].after(cloneScreen)
         screens = document.querySelectorAll('.screen')
-        
-        console.log(document.querySelectorAll('.cloned'));
     },
 
     addPrices: function() {
