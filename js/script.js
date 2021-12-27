@@ -152,7 +152,10 @@ const appData = {
         totalCountRollback.value = 0
         totalCount.value = 0
         if (cloneScreen !== '') {
-            cloneScreen.remove()
+            let clonedEl = document.querySelectorAll('.cloned')
+            clonedEl.forEach((clone) => {
+                clone.remove()
+            })
         }
     },
 
@@ -213,8 +216,9 @@ const appData = {
         cloneScreen = screens[0].cloneNode(true)
         cloneScreen.classList.add('cloned')
         screens[screens.length - 1].after(cloneScreen)
-
         screens = document.querySelectorAll('.screen')
+        
+        console.log(document.querySelectorAll('.cloned'));
     },
 
     addPrices: function() {
